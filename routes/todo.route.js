@@ -6,6 +6,7 @@ const router = new Router();
 
 router.get('/', authenticate, todoController.getTodos);
 router.get('/my-todos', authenticate, todoController.getMyTodos);
+router.get('/detail', authenticate, todoController.getTodo);
 router.post('/create', authenticate, todoController.createTodo);
 router.patch('/update', authenticate, todoController.update);
 

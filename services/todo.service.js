@@ -1,8 +1,4 @@
-
-import {
-  BAD_REQUEST,
-  createError,
-} from '../common/error-utils';
+import { BAD_REQUEST, createError } from '../common/error-utils';
 import TodoModel from '../models/todo.model';
 
 const createTodo = async ({ name, description, point, createdByUserId }) => {
@@ -12,39 +8,43 @@ const createTodo = async ({ name, description, point, createdByUserId }) => {
   }
 
   const todo = await TodoModel.create({
-    name, description, point, createdByUserId
+    name,
+    description,
+    point,
+    createdByUserId,
   });
 
   return todo;
 };
 
-const getTodos = async (page,limit) => {
+const getTodos = async (page, limit) => {
   const skip = (page - 1) * limit;
 
-  return TodoModel.find({
-
-  }).skip(skip)
-       .limit(limit)
+  return TodoModel.find({}).skip(skip).limit(limit);
 };
 
-const getMyTodos = async (page,limit, userId) => {
+const getMyTodos = async (page, limit, userId) => {
   const skip = (page - 1) * limit;
 
   return TodoModel.find({
     createdByUserId: userId,
-  }).skip(skip)
-       .limit(limit)
+  })
+    .skip(skip)
+    .limit(limit);
+};
+
+const getTodoById = async (id) => {
+  return TodoModel.findById(id);
 };
 
 const update = async (data) => {
-  const { name, description, point, isDone, todoId } =
-    data;
+  const { name, description, point, isDone, todoId } = data;
 
-    const savedTodo = await TodoModel.findById(todoId);
+  const savedTodo = await TodoModel.findById(todoId);
 
-    if(!savedTodo) {
-      throw createError(BAD_REQUEST, 'todo not found');
-    }
+  if (!savedTodo) {
+    throw createError(BAD_REQUEST, 'todo not found');
+  }
 
   const todoToBeUpdated = {};
 
@@ -64,7 +64,7 @@ const update = async (data) => {
     todoToBeUpdated.point = isDone;
   }
 
-  return  TodoModel.findByIdAndUpdate({ _id: todoId }, todoToBeUpdated, {
+  return TodoModel.findByIdAndUpdate({ _id: todoId }, todoToBeUpdated, {
     new: true,
   });
 };
@@ -74,4 +74,5 @@ export default {
   getTodos,
   getMyTodos,
   update,
+  getTodoById,
 };

@@ -11,22 +11,28 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const userData = req.body || {};
-  console.log('userData: ', userData);
   const user = await userService.createUser(userData);
 
   return res.status(200).json({ data: user });
 };
 
 const getUsers = async (req, res) => {
-  const { page,limit } = req.query;
+  const { page, limit } = req.query;
 
   const checkLimit = limit ?? 10;
-  
-  const users = await userService.getUsers(page,checkLimit);
-  const totals = await UserModel.countDocuments();
-  const totalPages =  Math.ceil(totals / checkLimit);
 
-  return res.status(200).json({ success: 'ok', data: users || [], totalPages, limit: checkLimit, page, totals });
+  const users = await userService.getUsers(page, checkLimit);
+  const totals = await UserModel.countDocuments();
+  const totalPages = Math.ceil(totals / checkLimit);
+
+  return res.status(200).json({
+    success: 'ok',
+    data: users || [],
+    totalPages,
+    limit: checkLimit,
+    page,
+    totals,
+  });
 };
 
 const activate = async (req, res) => {
@@ -56,7 +62,6 @@ const update = async (req, res) => {
   return res.status(200).json({ success: 'ok', data: result });
 };
 
-
 const sendForgotPasswordCode = async (req, res) => {
   const { email } = req.body || {};
 
@@ -85,7 +90,6 @@ const forgotPassword = async (req, res) => {
 
   return res.status(202).json({ success: 'ok', data: {} });
 };
-
 
 export default {
   login,

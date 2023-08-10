@@ -11,7 +11,7 @@ const connectMongoDB = () => {
   connection.on('error', (error) => {
     console.log(error);
   });
-  
+
   // enable this to debug.
   // mongoose.set('debug', true);
   connection.once('connected', () => {
