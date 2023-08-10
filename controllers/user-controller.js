@@ -91,6 +91,14 @@ const forgotPassword = async (req, res) => {
   return res.status(202).json({ success: 'ok', data: {} });
 };
 
+const deleteUser = async (req, res) => {
+  const { email } = req.body || {};
+
+  await userService.deleteUser(email);
+
+  return res.status(202).json({ success: 'ok', data: {} });
+};
+
 export default {
   login,
   register,
@@ -101,4 +109,5 @@ export default {
   sendForgotPasswordCode,
   checkCode,
   forgotPassword,
+  deleteUser,
 };

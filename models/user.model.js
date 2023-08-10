@@ -12,6 +12,7 @@ const userSchema = new Schema(
     email: String,
     password: String,
     avatar: String,
+    lastActivateCode: Number,
     gender: {
       type: Number,
       default: 1,

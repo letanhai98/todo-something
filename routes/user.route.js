@@ -12,5 +12,10 @@ router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/activate', userController.activate);
 router.post('/send-code', userController.sendActivateCode);
+router.post(
+  '/send-code-forgot-password',
+  userController.sendForgotPasswordCode
+);
+router.delete('/delete', userController.deleteUser);
 
 export default router;
