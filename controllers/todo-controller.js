@@ -1,5 +1,7 @@
+import mongoose from 'mongoose';
 import todoService from '../services/todo.service';
 import TodoModel from '../models/todo.model';
+import { createError } from '../common/error-utils';
 
 const createTodo = async (req, res) => {
   const todoData = req.body || {};
@@ -56,16 +58,24 @@ const getMyTodos = async (req, res) => {
 
 const getTodo = async (req, res) => {
   const { todoId } = req.query;
+
   const result = await todoService.getTodoById(todoId);
 
-  return res.status(200).json({ success: 'ok', data: result });
+  return res.status(200).json({ success: 'success', data: result });
 };
 
 const update = async (req, res) => {
   const data = req.body || {};
   const result = await todoService.update(data);
 
-  return res.status(200).json({ success: 'ok', data: result });
+  return res.status(200).json({ success: 'update success', data: result });
+};
+
+const deleteTodo = async (req, res) => {
+  const { todoId } = req.body;
+  const result = await todoService.detele(todoId);
+
+  return res.status(200).json({ success: 'delete success', result });
 };
 
 export default {
@@ -74,4 +84,5 @@ export default {
   update,
   getMyTodos,
   getTodo,
+  deleteTodo,
 };

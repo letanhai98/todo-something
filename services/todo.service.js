@@ -33,8 +33,24 @@ const getMyTodos = async (page, limit, userId) => {
     .limit(limit);
 };
 
-const getTodoById = async (id) => {
-  return TodoModel.findById(id);
+const getTodoById = async (todoId) => {
+  const savedTodo = await TodoModel.findById(todoId);
+
+  if (!savedTodo) {
+    throw createError(BAD_REQUEST, 'todo not found');
+  }
+
+  return TodoModel.findById(todoId);
+};
+
+const detele = async (todoId) => {
+  const savedTodo = await TodoModel.findById(todoId);
+
+  if (!savedTodo) {
+    throw createError(BAD_REQUEST, 'todo not found');
+  }
+
+  return TodoModel.findByIdAndDelete(todoId);
 };
 
 const update = async (data) => {
@@ -75,4 +91,5 @@ export default {
   getMyTodos,
   update,
   getTodoById,
+  detele,
 };
