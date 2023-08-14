@@ -76,8 +76,8 @@ const update = async (data) => {
     todoToBeUpdated.point = point;
   }
 
-  if (isDone) {
-    todoToBeUpdated.point = isDone;
+  if (!!isDone) {
+    todoToBeUpdated.isDone = isDone;
   }
 
   return TodoModel.findByIdAndUpdate({ _id: todoId }, todoToBeUpdated, {
